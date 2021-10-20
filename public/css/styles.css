@@ -1,0 +1,21 @@
+.message-container{
+    border:2px solid black;
+}
+
+.right{
+    text-align:right;
+    margin-right:20px;
+}
+
+.left{
+    margin-left:20px;
+}
+
+.center{
+    text-align:center;
+}
+
+.center-container{
+    max-width:1000px;
+    margin:auto;
+}
