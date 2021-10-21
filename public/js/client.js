@@ -25,6 +25,22 @@ socket.on("locationMessage",(text)=>{
     $messageContainer.innerHTML=html
 })
 
+//getting username and room name
+let query = location.search     
+query=query.substring(1)    //now remove ? at 0th index
+let arr = query.split("&")  //separate by & sign
+let obj={}  //store queries in obj
+arr.forEach((item)=>{
+    obj[item.split("=")[0]]=item.split("=")[1]
+})
+
+//send warning if username and room is not in query
+if(obj["username"]===undefined || obj["room"]===undefined)  
+{
+    alert("Please enter username and room name")
+    location.href="/"
+}
+
 $messageForm.addEventListener("submit",(e)=>{
     e.preventDefault()
     const message = document.getElementById("message").value
