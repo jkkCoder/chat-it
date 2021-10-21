@@ -1,5 +1,14 @@
 const socket = io()
 
+//utils function
+const getTime = ()=>{
+    const date = new Date()
+    let str = date.getHours().toString()
+    str+=":"
+    str+=date.getMinutes().toString()
+    return str
+}
+
 //elements
 const $messageForm = document.querySelector("#message-form")
 const $messageContainer = document.querySelector(".message-container")
@@ -7,19 +16,37 @@ const $locationButton = document.querySelector("#location")
 
 socket.on("message",(messageObj)=>{
     let html = $messageContainer.innerHTML
-    html += `
-        <div class="messages ${messageObj.position}">
-            <p>${messageObj.message}</p>
-        </div>
-    `
+    if(messageObj.position==="left"){
+        html += `
+            <div class="messages ${messageObj.position}">
+                <p>
+                    <span>${messageObj.username}</span>
+                    <span>${getTime()}</span>
+                </p>
+                <p>${messageObj.message}</p>
+            </div>
+        `
+    }
+    else    //for center message no need of username and time
+    {
+        html+= `
+            <div class="messages ${messageObj.position}">
+                <p>${messageObj.message}</p>
+            </div>
+        `
+    }
     $messageContainer.innerHTML=html
 })
 
-socket.on("locationMessage",(text)=>{
+socket.on("locationMessage",(messageObj)=>{
     let html = $messageContainer.innerHTML
     html+=`
         <div class="message left">
-            <a href="${text}" target="_blank">My current location</a>
+            <p>
+                <span>${messageObj.username}</span>
+                <span>${getTime()}</span>
+            </p>
+            <a href="${messageObj.message}" target="_blank">My current location</a>
         </div>
     `
     $messageContainer.innerHTML=html
@@ -40,6 +67,14 @@ if(obj["username"]===undefined || obj["room"]===undefined)
     alert("Please enter username and room name")
     location.href="/"
 }
+//now emit username and room 
+socket.emit("join",{username:obj["username"],room:obj["room"]},(error)=>{
+    if(error)
+    {
+        alert(error)
+        location.href="/"
+    }
+})
 
 $messageForm.addEventListener("submit",(e)=>{
     e.preventDefault()
@@ -47,15 +82,16 @@ $messageForm.addEventListener("submit",(e)=>{
     let html = $messageContainer.innerHTML
     html += `
         <div class="messages right">
+            <p>
+                <span>You</span>
+                <span>${getTime()}</span>
+            </p>
             <p>${message}</p>
         </div>
     `
     $messageContainer.innerHTML=html
     
-    socket.emit("sendMessage",{
-        message:message,
-        position:"right"
-    })
+    socket.emit("sendMessage",message)
     document.getElementById("message").value = ""
 })
 
@@ -73,6 +109,10 @@ $locationButton.addEventListener("click",()=>{
         let html = $messageContainer.innerHTML
         html+=`
             <div class="message right">
+                <p>
+                    <span>You</span>
+                    <span>${getTime()}</span>
+                </p>
                 <a href="https://google.com/maps?q=${location.latitude},${location.longitude}" target="_blank">My current location</a>
             </div>   `
         $messageContainer.innerHTML=html

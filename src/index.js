@@ -2,6 +2,8 @@ const express = require("express")
 const http = require("http")
 const socketio = require("socket.io")
 const path = require("path")
+const {generateMessage,generateLocationMessage} = require("./utils/messages")
+const {addUser,getUser,removeUser} = require("./utils/users")
 
 const app = express()
 const server = http.createServer(app)
@@ -14,31 +16,40 @@ app.use(express.static(publicDirectoryPath))
 
 io.on("connection",(socket)=>{
 
-    socket.emit("message",{
-        message:"Welcome!",
-        position:"center"
-    })
+    socket.on("join",({username,room},callback)=>{
+        const {user,error} = addUser(socket.id,username,room)   //it either returns errror or user
+        if(error)
+        {
+            return callback(error)
+        }
 
-    socket.broadcast.emit("message",{
-        message:"A user has joined",
-        position:"center"
-    })
-
-    socket.on("sendMessage",(messageObj)=>{
+        socket.emit("message",{
+            message:"Welcome!",
+            position:"center"
+        })
+    
         socket.broadcast.emit("message",{
-            message:messageObj.message,
-            position:"left"
+            message:`${user.username} has joined`,
+            position:"center"
         })
     })
+    socket.on("sendMessage",(message)=>{
+        const user = getUser(socket.id)
+        socket.broadcast.emit("message",generateMessage(message,"left",user.username))
+    })
     socket.on("sendLocation",(position)=>{
-        socket.broadcast.emit("locationMessage",`https://google.com/maps?q=${position.latitude},${position.longitude}`)
+        const user = getUser(socket.id)
+        socket.broadcast.emit("locationMessage",generateLocationMessage(`https://google.com/maps?q=${position.latitude},${position.longitude}`,user.username))
     })
 
     socket.on("disconnect",()=>{
-        io.emit("message",{
-            message:"A user has left",
-            position:"center"
-        })
+        const user = removeUser(socket.id)
+        if(user){
+            io.emit("message",{
+                message:`${user.username} has left`,
+                position:"center"
+            })
+        }
     })
 })
 
