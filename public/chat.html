@@ -10,17 +10,23 @@
 </head>
 
 <body>
-    <div class="center-container">
-        Chat Application
-        <div class="message-container">
-            <!--<div class="messages"><p>This is message</p></div>-->
+    <div class="page">
+
+        <div class="users-container">
+            <!-- <div class="users">jayesh</div> -->
         </div>
-        <div class="message-composer">
-            <form id="message-form">
-                <input id="message" type="text" placeholder="message" required autocomplete="off">
-                <button>Send</button>
-            </form>
-            <button id="location">Send Location</button>
+
+        <div class="center-container">
+            <div class="message-container">
+                <!--<div class="messages"><p>This is message</p></div>-->
+            </div>
+            <div class="message-composer">
+                <form id="message-form">
+                    <input id="message" type="text" placeholder="message" required autocomplete="off">
+                    <button>Send</button>
+                </form>
+                <button id="location">Send Location</button>
+            </div>
         </div>
     </div>
     <script src="/socket.io/socket.io.js"></script>

@@ -3,7 +3,7 @@ const http = require("http")
 const socketio = require("socket.io")
 const path = require("path")
 const {generateMessage,generateLocationMessage} = require("./utils/messages")
-const {addUser,getUser,removeUser} = require("./utils/users")
+const {addUser,getUser,removeUser,getUsersInRoom} = require("./utils/users")
 
 const app = express()
 const server = http.createServer(app)
@@ -34,6 +34,9 @@ io.on("connection",(socket)=>{
             message:`${user.username} has joined`,
             position:"center"
         })
+
+        const users = getUsersInRoom(user.room)
+        io.to(user.room).emit("roomData",users)
     })
     socket.on("sendMessage",(message)=>{
         const user = getUser(socket.id)

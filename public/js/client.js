@@ -13,6 +13,7 @@ const getTime = ()=>{
 const $messageForm = document.querySelector("#message-form")
 const $messageContainer = document.querySelector(".message-container")
 const $locationButton = document.querySelector("#location")
+const $usersContainer = document.querySelector(".users-container")
 
 socket.on("message",(messageObj)=>{
     let html = $messageContainer.innerHTML
@@ -50,6 +51,14 @@ socket.on("locationMessage",(messageObj)=>{
         </div>
     `
     $messageContainer.innerHTML=html
+})
+
+socket.on("roomData",(users)=>{
+    let html = ""
+    users.forEach((user)=>{
+        html += `<div>${user.username}</div>`
+    })
+    $usersContainer.innerHTML = html
 })
 
 //getting username and room name

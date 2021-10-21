@@ -32,6 +32,13 @@ const getUser = (id) =>{
     return user
 }
 
+const getUsersInRoom = (room)=>{
+    const usersInRoom = users.filter((user)=>{
+        return user.room === room
+    })
+    return usersInRoom
+}
+
 const removeUser = (id)=>{
     const index = users.findIndex((user)=>{
         return user.id === id
@@ -47,5 +54,6 @@ const removeUser = (id)=>{
 module.exports={
     addUser,
     getUser,
-    removeUser
+    removeUser,
+    getUsersInRoom
 }
