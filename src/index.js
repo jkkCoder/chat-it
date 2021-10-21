@@ -23,29 +23,31 @@ io.on("connection",(socket)=>{
             return callback(error)
         }
 
+        socket.join(user.room)      //joining separate room
+
         socket.emit("message",{
             message:"Welcome!",
             position:"center"
         })
     
-        socket.broadcast.emit("message",{
+        socket.broadcast.to(user.room).emit("message",{
             message:`${user.username} has joined`,
             position:"center"
         })
     })
     socket.on("sendMessage",(message)=>{
         const user = getUser(socket.id)
-        socket.broadcast.emit("message",generateMessage(message,"left",user.username))
+        socket.broadcast.to(user.room).emit("message",generateMessage(message,"left",user.username))
     })
     socket.on("sendLocation",(position)=>{
         const user = getUser(socket.id)
-        socket.broadcast.emit("locationMessage",generateLocationMessage(`https://google.com/maps?q=${position.latitude},${position.longitude}`,user.username))
+        socket.broadcast.to(user.room).emit("locationMessage",generateLocationMessage(`https://google.com/maps?q=${position.latitude},${position.longitude}`,user.username))
     })
 
     socket.on("disconnect",()=>{
         const user = removeUser(socket.id)
         if(user){
-            io.emit("message",{
+            io.to(user.room).emit("message",{
                 message:`${user.username} has left`,
                 position:"center"
             })
