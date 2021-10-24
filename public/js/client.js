@@ -13,16 +13,16 @@ const getTime = ()=>{
 const $messageForm = document.querySelector("#message-form")
 const $messageContainer = document.querySelector(".message-container")
 const $locationButton = document.querySelector("#location")
-const $usersContainer = document.querySelector(".users-container")
+const $userContainer = document.querySelector(".user-container")
 
 socket.on("message",(messageObj)=>{
     let html = $messageContainer.innerHTML
     if(messageObj.position==="left"){
         html += `
             <div class="messages ${messageObj.position}">
-                <p>
-                    <span>${messageObj.username}</span>
-                    <span>${getTime()}</span>
+                <p class="time-name">
+                    <span class="name">${messageObj.username}</span>
+                    <span class="time">${getTime()}</span>
                 </p>
                 <p>${messageObj.message}</p>
             </div>
@@ -42,10 +42,10 @@ socket.on("message",(messageObj)=>{
 socket.on("locationMessage",(messageObj)=>{
     let html = $messageContainer.innerHTML
     html+=`
-        <div class="message left">
-            <p>
-                <span>${messageObj.username}</span>
-                <span>${getTime()}</span>
+        <div class="messages left">
+            <p class="time-name">
+                <span class="name">${messageObj.username}</span>
+                <span class="time">${getTime()}</span>
             </p>
             <a href="${messageObj.message}" target="_blank">My current location</a>
         </div>
@@ -53,12 +53,13 @@ socket.on("locationMessage",(messageObj)=>{
     $messageContainer.innerHTML=html
 })
 
-socket.on("roomData",(users)=>{
+socket.on("roomData",({users,room})=>{
+    document.querySelector(".room-name").innerText = room
     let html = ""
     users.forEach((user)=>{
         html += `<div>${user.username}</div>`
     })
-    $usersContainer.innerHTML = html
+    $userContainer.innerHTML = html
 })
 
 //getting username and room name
@@ -91,9 +92,9 @@ $messageForm.addEventListener("submit",(e)=>{
     let html = $messageContainer.innerHTML
     html += `
         <div class="messages right">
-            <p>
-                <span>You</span>
-                <span>${getTime()}</span>
+            <p class="time-name">
+                <span class="name">You</span>
+                <span class="time">${getTime()}</span>
             </p>
             <p>${message}</p>
         </div>
@@ -117,10 +118,10 @@ $locationButton.addEventListener("click",()=>{
         }
         let html = $messageContainer.innerHTML
         html+=`
-            <div class="message right">
-                <p>
-                    <span>You</span>
-                    <span>${getTime()}</span>
+            <div class="messages right">
+                <p class="time-name">
+                    <span class="name">You</span>
+                    <span class="time">${getTime()}</span>
                 </p>
                 <a href="https://google.com/maps?q=${location.latitude},${location.longitude}" target="_blank">My current location</a>
             </div>   `

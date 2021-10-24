@@ -24,13 +24,47 @@
     width: 80%;
     margin: auto;
 }
+.user-container{
+    margin-top: 20px;
+    margin-left: 5px;
+    font-size: 22px;
+}
+.user-container div{
+    padding:5px;
+}
 .users-container{
     background-color:grey;
     height:100vh;
     width:200px;
 }
+.message-container::before{
+    content:"";
+    background:url("./../img/bg.jpg");
+    /* background-image: linear-gradient(rgba(0, 0, 0, 0.527),rgba(0, 0, 0, 0.5)) , url(./../img/bg.jpg); */
+    z-index:-1;
+    position:absolute;
+    height: 79%;
+    width:79%;
+    opacity:0.9
+
+}
 .message-container{
-    height:80vh;
+    height: 80vh;
+    border-radius: 12px;
+    overflow: scroll;
+    border: 2px solid black;
+}
+.messages{
+    font-size: 18px;
+    font-style: oblique;
+    margin-bottom: 13px;
+}
+.time{
+    font-size:15px;
+}   
+.name{
+    margin-right:10px;
+    font-size:15px;
 }
 .page{
     display:flex;
@@ -38,7 +72,48 @@
 }
 
 input{
-    width: 90%;
+    width: 88%;
     height: 50px;
-    margin: 5px
+    font-size:18px;
+    margin: 5px;
+    border-radius: 10px;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+#message-form button{
+    width: 6%;
+    height: 46px;
+    border-radius: 6px;
+    background-color: rebeccapurple;
+    color: white;
+    font-size: 18px;
+}
+#location{
+    font-size: 18px;
+    background-color: rebeccapurple;
+    color: white;
+    height: 37px;
+    border-radius: 5px;
+    padding: 8px;
+    width: 14%;
+    margin-bottom: 5px;
+}
+.room-name{
+    background-color: black;
+    color: white;
+    font-size: 32px;
+    padding: 10px;
+    text-align: center
+}
+
+.time:last-child{
+    color:#c1c6c1;
+}
+
+p{
+    color:white;
+}
+
+a{
+   color:#0089ff;
 }

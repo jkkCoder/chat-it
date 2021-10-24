@@ -1,23 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chat It!</title>
+    <style>
+        *{
+            padding:0;
+            margin:0;
+        }
+        .page{
+            display:flex;
+            flex-direction:row;
+        }
+        .rooms-container{
+            width:400px;
+            background-color:grey;
+            height:100vh;
+        }
+        .right-container-empty{
+            width:400px;
+        }
+
+    </style>
 </head>
+
 <body>
-    <div class="room-container">
-        
-    </div>
-    <div class="form-container">
-        <form action="/chat.html">
-            <label for="name">Username:</label>
-            <input type="text" name="username" placeholder="Username" id="name" required autocomplete="off">    
-            <label for="room">Room:</label>
-            <input type="text" name="room" placeholder="room name" id="room" required autocomplete="off">
-            <button type="submit">Join</button>
-        </form>
+    <div class="page">
+        <!-- <div class="rooms-container">
+            <input type="text" id="room-username" placeholder="username">
+            <p>Enter username to open rooms list</p>
+            <div class="room-container">
+                <div>room1</div>
+                <div>room2</div>
+            </div>
+        </div> -->
+        <div class="form-container">
+            <form action="/chat.html">
+                <label for="name">Username:</label>
+                <input type="text" name="username" placeholder="Username" id="name" required autocomplete="off">
+                <label for="room">Room:</label>
+                <input type="text" name="room" placeholder="room name" id="room" required autocomplete="off">
+                <button type="submit">Join</button>
+            </form>
+        </div>
+        <div class="right-container-empty"></div>
     </div>
 </body>
+
 </html>

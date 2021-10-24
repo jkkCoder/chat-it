@@ -3,7 +3,7 @@ const http = require("http")
 const socketio = require("socket.io")
 const path = require("path")
 const {generateMessage,generateLocationMessage} = require("./utils/messages")
-const {addUser,getUser,removeUser,getUsersInRoom} = require("./utils/users")
+const {addUser,getUser,removeUser,getUsersInRoom,getRooms} = require("./utils/users")
 
 const app = express()
 const server = http.createServer(app)
@@ -36,7 +36,7 @@ io.on("connection",(socket)=>{
         })
 
         const users = getUsersInRoom(user.room)
-        io.to(user.room).emit("roomData",users)
+        io.to(user.room).emit("roomData",{users:users,room:user.room})
     })
     socket.on("sendMessage",(message)=>{
         const user = getUser(socket.id)
@@ -50,6 +50,9 @@ io.on("connection",(socket)=>{
     socket.on("disconnect",()=>{
         const user = removeUser(socket.id)
         if(user){
+            const users = getUsersInRoom(user.room)
+            io.to(user.room).emit("roomData",{users:users,room:user.room})
+            
             io.to(user.room).emit("message",{
                 message:`${user.username} has left`,
                 position:"center"

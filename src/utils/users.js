@@ -51,9 +51,27 @@ const removeUser = (id)=>{
     }
 }
 
+const getRooms = ()=>{
+    const rooms = new Set()
+    users.forEach((user)=>{
+        rooms.add(user.room)
+    })
+    return rooms
+}
+
 module.exports={
     addUser,
     getUser,
     removeUser,
-    getUsersInRoom
+    getUsersInRoom,
+    getRooms
 }
+
+
+// addUser(1,"jayesh","room")
+// addUser(2,"kumar","room")
+// addUser(3,"jayesh","room2")
+// const rooms = getRooms()
+// rooms.forEach((room)=>{
+//     console.log(room)
+// })
