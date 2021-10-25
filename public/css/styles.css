@@ -17,6 +17,7 @@
 }
 
 .center{
+    margin-top:2px;
     text-align:center;
 }
 
@@ -43,15 +44,15 @@
     /* background-image: linear-gradient(rgba(0, 0, 0, 0.527),rgba(0, 0, 0, 0.5)) , url(./../img/bg.jpg); */
     z-index:-1;
     position:absolute;
-    height: 79%;
+    height: 80%;
     width:79%;
-    opacity:0.9
-
+    opacity:0.9;
+    border-radius:8px;
 }
 .message-container{
     height: 80vh;
     border-radius: 12px;
-    overflow: scroll;
+    overflow-y: scroll;
     border: 2px solid black;
 }
 .messages{
@@ -79,6 +80,9 @@ input{
     border-radius: 10px;
     padding-left: 5px;
     padding-right: 5px;
+}
+button:hover{
+    cursor:pointer;
 }
 #message-form button{
     width: 6%;
