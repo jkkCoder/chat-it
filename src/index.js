@@ -15,6 +15,13 @@ const publicDirectoryPath = path.join(__dirname,"../public")
 app.use(express.static(publicDirectoryPath))
 
 io.on("connection",(socket)=>{
+    
+    const roomSet = getRooms()
+    let rooms = []
+    roomSet.forEach((room)=>{
+        rooms.push(room)
+    })
+    socket.emit("rooms",rooms)  //this is to be sent to index page
 
     socket.on("join",({username,room},callback)=>{
         const {user,error} = addUser(socket.id,username,room)   //it either returns errror or user
