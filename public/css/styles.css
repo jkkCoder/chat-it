@@ -125,9 +125,12 @@ button:hover{
 .time:last-child{
     color:#c1c6c1;
 }
-
+.right p{
+    margin-left:auto;
+}
 p{
     color:white;
+    max-width:800px;
 }
 
 a{
