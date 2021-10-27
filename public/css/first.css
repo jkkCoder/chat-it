@@ -91,3 +91,17 @@ form div {
     margin: 8px;
     cursor: pointer;
 }
+
+
+@media only screen and (max-width: 575px) {
+    body {
+      background-color: black;
+    }
+    .page{
+        flex-direction:column;
+    }
+    .room-container{
+        display:none;
+    }
+
+  }

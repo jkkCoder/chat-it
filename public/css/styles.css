@@ -133,3 +133,28 @@ p{
 a{
    color:#0089ff;
 }
+
+@media only screen and (max-width: 575px) {
+    .users-container{
+        display:none;
+    }
+    .center-container{
+        width:100%;
+    }
+    .message-container::before{
+        width:100%;
+    }
+    input{
+        width:76%;
+        height:44px;
+    }
+    #message-form button{
+        width:14%;
+    }
+    #location{
+        display:block;
+        margin:auto;
+        height:44px;
+        width:56%;
+    }
+  }
