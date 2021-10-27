@@ -9,6 +9,29 @@ const getTime = ()=>{
     return str
 }
 
+const autoscroll = () => {
+    //New message element
+    const $newMessage = $messageContainer.lastElementChild
+
+    //height of the new message
+    const newMessageStyles = getComputedStyle($newMessage)
+    const newMessageMargin = parseInt(newMessageStyles.marginBottom)
+    const newMessageHeight = $newMessage.offsetHeight + newMessageMargin
+
+    //visible height
+    const visibleHeight = $messageContainer.offsetHeight
+
+    //height of message container
+    const containerHeight = $messageContainer.scrollHeight
+
+    //how far i have scrolled
+    const scrollOffset = $messageContainer.scrollTop + visibleHeight
+
+    if(containerHeight - newMessageHeight <= scrollOffset){
+        $messageContainer.scrollTop = $messageContainer.scrollHeight
+    }
+}
+
 //elements
 const $messageForm = document.querySelector("#message-form")
 const $messageContainer = document.querySelector(".message-container")
@@ -37,6 +60,7 @@ socket.on("message",(messageObj)=>{
         `
     }
     $messageContainer.innerHTML=html
+    autoscroll()
 })
 
 socket.on("locationMessage",(messageObj)=>{
@@ -51,6 +75,7 @@ socket.on("locationMessage",(messageObj)=>{
         </div>
     `
     $messageContainer.innerHTML=html
+    autoscroll()
 })
 
 socket.on("roomData",({users,room})=>{
@@ -100,6 +125,7 @@ $messageForm.addEventListener("submit",(e)=>{
         </div>
     `
     $messageContainer.innerHTML=html
+    autoscroll()
     
     socket.emit("sendMessage",message)
     document.getElementById("message").value = ""
@@ -126,6 +152,7 @@ $locationButton.addEventListener("click",()=>{
                 <a href="https://google.com/maps?q=${location.latitude},${location.longitude}" target="_blank">My current location</a>
             </div>   `
         $messageContainer.innerHTML=html
+        autoscroll()
         socket.emit("sendLocation",location)
     })
 })
