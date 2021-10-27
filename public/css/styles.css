@@ -132,6 +132,9 @@ p{
     color:white;
     max-width:800px;
 }
+.center p{
+    margin:auto;
+}
 
 a{
    color:#0089ff;
