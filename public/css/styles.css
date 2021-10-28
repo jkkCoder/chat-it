@@ -140,7 +140,30 @@ a{
    color:#0089ff;
 }
 
-@media only screen and (max-width: 575px) {
+@media only screen and (max-width: 1230px)  {
+    body{
+        background-color: white;
+    }
+    input{
+        width:84%;
+        height:40px;
+    }
+    #message-form button{
+        width:10%;
+    }
+    #location{
+        display:block;
+        height:33px;
+        width:37%;
+        margin:auto;
+    }
+
+}
+
+@media only screen and (max-width: 647px) {
+    body{
+        background-color:white;
+    }
     .users-container{
         display:none;
     }

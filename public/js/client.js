@@ -3,9 +3,16 @@ const socket = io()
 //utils function
 const getTime = ()=>{
     const date = new Date()
-    let str = date.getHours().toString()
+    let hr = date.getHours()
+    let str=""
+    if(hr<10)
+        str+="0"
+    str=str+hr.toString()
     str+=":"
-    str+=date.getMinutes().toString()
+    let min=date.getMinutes()
+    if(min<10)
+        str+="0"
+    str+=min.toString()
     return str
 }
 
