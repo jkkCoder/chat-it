@@ -100,7 +100,12 @@ query=query.substring(1)    //now remove ? at 0th index
 let arr = query.split("&")  //separate by & sign
 let obj={}  //store queries in obj
 arr.forEach((item)=>{
-    obj[item.split("=")[0]]=item.split("=")[1]
+    let key = item.split("=")[0]
+    let value = item.split("=")[1]
+
+    //remove "+" with " "
+    value = value.replaceAll("+"," ")
+    obj[key]=value
 })
 
 //send warning if username and room is not in query
