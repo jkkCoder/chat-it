@@ -164,4 +164,7 @@ a{
         height:44px;
         width:56%;
     }
+    p{
+        max-width:270px;
+    }
   }
